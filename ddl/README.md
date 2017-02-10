@@ -9,4 +9,4 @@ Deploy the database scripts<br/>
 Open command line window and then:<br/>
 <code>cd ddl</code><br/>
 <code>psql --username=postgres -W -f create_nci_db.sql</code><br/>
-<code>psql --username=postgres --dbname=ncicore -W -f create_nci_info_tables.sql</code><br/>
+<code>psql --username=postgres --dbname=ncicore -W -f create_nci_test_tables.sql</code><br/>
