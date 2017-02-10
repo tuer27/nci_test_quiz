@@ -25,6 +25,7 @@ CREATE TABLE ncitest.topic
 (
   id 			serial NOT NULL,
   name 			character varying(1024) NOT NULL,
+  description	text NOT NULL,
   category_id	integer,
   create_ts		timestamp without time zone NOT NULL DEFAULT now(),
   update_ts		timestamp without time zone NOT NULL,
