@@ -25,3 +25,6 @@ Run
 ## Running
 Run
 <code>java</code>
+
+## Use the services
+http://localhost:8080/swagger-ui.html
