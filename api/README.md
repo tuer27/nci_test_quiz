@@ -24,7 +24,7 @@ Run
 
 ## Running
 Run
-<code>java</code>
+<code>java -jar target\api-0.0.1-SNAPSHOT.jar</code>
 
 ## Use the services
 http://localhost:8080/swagger-ui.html
