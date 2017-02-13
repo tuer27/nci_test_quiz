@@ -1,7 +1,10 @@
 package com.nciinc.ws.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,10 +33,15 @@ public class Topic {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id", insertable=false, updatable=false)
 	private TopicCategory category;
+	
+	@OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+	private Set<Owner> owners = new HashSet<Owner>(0);
 
 	private String name;
 
 	private String description;
+	
+	private boolean activeFlag;
 
 	@Column(name = "create_ts", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -49,13 +58,17 @@ public class Topic {
 	public Topic(TopicInfo input) {
 		name = input.getName();
 		description = input.getDescription();
+		activeFlag = input.getActiveFlag();
 		categoryId = input.getCategoryId();
+		owners = input.getOwners();
 		updateDate = new Date();
 	}
 
 	public void update(TopicInfo input) {
 		name = input.getName();
 		description = input.getDescription();
+		activeFlag = input.getActiveFlag();
+		owners = input.getOwners();
 		categoryId = input.getCategoryId();
 		updateDate = new Date();
 	}
@@ -91,6 +104,14 @@ public class Topic {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public boolean getActiveFlag(){
+		return activeFlag;
+	}
+	
+	public void setActiveFlag(boolean activeFlag){
+		this.activeFlag = activeFlag;
+	}
 
 	public String getDescription() {
 		return description;
@@ -115,4 +136,13 @@ public class Topic {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	
+    public Set<Owner> getOwners() {
+        return owners;
+    }
+
+    public void setOwners(Set<Owner> owners) {
+        this.owners = owners;
+    }
 }
