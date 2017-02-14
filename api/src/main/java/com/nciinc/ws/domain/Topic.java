@@ -1,10 +1,6 @@
 package com.nciinc.ws.domain;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,11 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import com.nciinc.ws.dto.TopicInfo;
 
 @Entity
@@ -34,8 +28,12 @@ public class Topic {
 	@JoinColumn(name="category_id", insertable=false, updatable=false)
 	private TopicCategory category;
 	
-	@OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
-	private Set<Owner> owners = new HashSet<Owner>(0);
+	
+	@Column(name = "owner_id")
+	private int ownerId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="owner_id", insertable=false, updatable=false)
+	private Owner owner;
 
 	private String name;
 
@@ -60,7 +58,7 @@ public class Topic {
 		description = input.getDescription();
 		activeFlag = input.getActiveFlag();
 		categoryId = input.getCategoryId();
-		owners = input.getOwners();
+		ownerId = input.getOwnerId();
 		updateDate = new Date();
 	}
 
@@ -68,7 +66,7 @@ public class Topic {
 		name = input.getName();
 		description = input.getDescription();
 		activeFlag = input.getActiveFlag();
-		owners = input.getOwners();
+		ownerId = input.getOwnerId();
 		categoryId = input.getCategoryId();
 		updateDate = new Date();
 	}
@@ -81,6 +79,23 @@ public class Topic {
 		this.id = id;
 	}
 
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
+	
+	
 	public int getCategoryId() {
 		return categoryId;
 	}
@@ -96,6 +111,8 @@ public class Topic {
 	public void setCategory(TopicCategory category) {
 		this.category = category;
 	}
+	
+	
 
 	public String getName() {
 		return name;
@@ -137,12 +154,5 @@ public class Topic {
 		this.updateDate = updateDate;
 	}
 	
-	
-    public Set<Owner> getOwners() {
-        return owners;
-    }
 
-    public void setOwners(Set<Owner> owners) {
-        this.owners = owners;
-    }
 }

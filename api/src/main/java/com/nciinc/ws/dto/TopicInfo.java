@@ -2,14 +2,11 @@ package com.nciinc.ws.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.nciinc.ws.domain.Owner;
 import com.nciinc.ws.domain.Topic;
 
 public class TopicInfo implements Serializable {
@@ -28,12 +25,14 @@ public class TopicInfo implements Serializable {
 	private boolean activeFlag;
 
 	private int categoryId;
+	
+	private int ownerId;
 
 	@Valid
 	private TopicCategoryInfo category;
 	
 	@Valid
-	private Set<Owner> owners = new HashSet<Owner>(0);
+	private OwnerInfo owner;
 
 	private Date createDate;
 	private Date updateDate;
@@ -48,7 +47,9 @@ public class TopicInfo implements Serializable {
 		category = new TopicCategoryInfo(topic.getCategory());
 		description = topic.getDescription();
 		activeFlag = topic.getActiveFlag();
-		owners = topic.getOwners();
+		
+		ownerId = topic.getOwner().getId();
+		owner = new OwnerInfo(topic.getOwner());
 		createDate = topic.getCreateDate();
 		updateDate = topic.getUpdateDate();
 	}
@@ -101,12 +102,20 @@ public class TopicInfo implements Serializable {
 		this.category = category;
 	}
 	
-	public Set<Owner> getOwners(){
-		return owners;
+	
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+	public OwnerInfo getOwner(){
+		return owner;
 	}
 	
-	public void setOwners(Set<Owner> owners){
-		this.owners = owners;
+	public void setOwners(OwnerInfo owner){
+		this.owner = owner;
 	}
 
 	public Date getCreateDate() {

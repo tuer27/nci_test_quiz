@@ -67,10 +67,10 @@ public class MessageEndpoint {
 		TopicCategory category = categoryDAO.findOne(input.getCategoryId());
 		if (category == null) throw new BusinessException("The category ID: "+input.getCategoryId()+" is not a valid category ID");
 
-		for(Owner owner: input.getOwners()){
-			Owner o = ownerDAO.findOne(owner.getId());
-			if(o==null) throw new BusinessException("There is no owner associated with id: "+owner.getId());
-		}
+		
+		// Validate whether the owner exists
+		Owner owner = ownerDAO.findOne(input.getOwnerId());
+		if (owner == null) throw new BusinessException("The owner ID: "+input.getOwnerId()+" is not a valid owner ID");
 		
 		// Create topic
 		Topic topic = new Topic(input);
@@ -90,10 +90,14 @@ public class MessageEndpoint {
 		TopicCategory category = categoryDAO.findOne(input.getCategoryId());
 		if (category == null) throw new BusinessException("The category ID: "+input.getCategoryId()+" is not a valid category ID");
 
-		for(Owner owner: input.getOwners()){
-			Owner o = ownerDAO.findOne(owner.getId());
-			if(o==null) throw new BusinessException("There is no owner associated with id: "+owner.getId());
-		}
+		// Validate whether the owner exists
+		Owner owner = ownerDAO.findOne(input.getOwnerId());
+		if (owner == null) throw new BusinessException("The owner ID: "+input.getOwnerId()+" is not a valid owner ID");
+		
+//		for(Owner owner: input.getOwners()){
+//			Owner o = ownerDAO.findOne(owner.getId());
+//			if(o==null) throw new BusinessException("There is no owner associated with id: "+owner.getId());
+//		}
 		
 		// Update the topic
 		topic.update(input);

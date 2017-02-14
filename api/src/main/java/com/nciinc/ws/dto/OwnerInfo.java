@@ -17,11 +17,7 @@ public class OwnerInfo implements Serializable {
 	@Size(max=255)
 	private String name;
 	
-	private int topicId;
-	private TopicInfo topic;
-	
 	private Date createDate;
-	private Date updateDate;
 
 	public OwnerInfo() {
 	}
@@ -29,12 +25,7 @@ public class OwnerInfo implements Serializable {
 	public OwnerInfo(Owner owner) {
 		id = owner.getId();
 		name = owner.getName();
-		
-		topicId = owner.getTopic().getId();
-		topic = new TopicInfo(owner.getTopic());
-		
 		createDate = owner.getCreateDate();
-		updateDate = owner.getUpdateDate();
 	}
 
 	public int getId() {
@@ -53,38 +44,12 @@ public class OwnerInfo implements Serializable {
 		this.name = name;
 	}
 	
-	public int getTopicId() {
-		return topicId;
-	}
-
-	public void setTopicId(int topicId) {
-		this.topicId = topicId;
-	}
-
-	public TopicInfo getCategory() {
-		return topic;
-	}
-
-	public void setCategory(TopicInfo topic) {
-		this.topic = topic;
-	}
-	
-	
-	
 	public Date getCreateDate() {
 		return createDate;
 	}
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
-	}
-
-	public Date getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
 	}
 
 
